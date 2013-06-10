@@ -4,7 +4,7 @@
 
 ## Documentation
 
-See [godoc](http://godoc.org/github.com/yanatan16/spsa) or the [examples](https://github.com/blob/master/spsa_test.go)
+See [godoc](http://godoc.org/github.com/yanatan16/golang-spsa) or the [examples](https://github.com/yanatan16/golang-spsa/blob/master/spsa_test.go)
 
 ## Using SPSA
 

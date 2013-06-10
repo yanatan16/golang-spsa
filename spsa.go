@@ -2,6 +2,23 @@
 //
 // Much of the notation is taken from Introduction To Stochastic Search and Optimization
 // (ISSO), James Spall's book on Stochastic Optimization. (published by Wiley 2003)
+//
+// Example Usage:
+//
+// This example uses the core optimization api with access to all the tunable knobs.
+//    spsa := &SPSA{
+//    	L: AbsoluteSum, // Loss Function
+//    	C: NoConstraints,
+//    	Theta: Vector{1,1,1,1,1},
+//    	Ak: StandardAk(1, 100, .602),
+//    	Ck: StandardCk(.1, .101),
+//    	Delta: Bernoulli{1},
+//    }
+//    theta := spsa.Run(1000)
+//
+// This example uses the helper function Optimize which shortens the boilerplate
+// with default options.
+//    theta := Optimize(AbsoluteSum/*Loss function*/, Vector{1,1,1,1,1}/*Theta0*/, 100/*n*/, 1/*a*/, .1/*c*/)
 package spsa
 
 import (
