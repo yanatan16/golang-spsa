@@ -22,8 +22,8 @@
 package spsa
 
 import (
-	"math/rand"
 	"math"
+	"math/rand"
 )
 
 //********** Type Definitions ************
@@ -53,10 +53,10 @@ type SPSA struct {
 	// The parameter vector in question. Initialize with Theta0 starting point.
 	Theta Vector
 
-	L LossFunction
+	L      LossFunction
 	Ak, Ck GainSequence
-	Delta PerturbationDistribution
-	C ConstraintFunction
+	Delta  PerturbationDistribution
+	C      ConstraintFunction
 }
 
 //****************** SPSA Implementation ****************
@@ -72,11 +72,11 @@ func Optimize(L LossFunction, theta0 Vector, n int, a, c float64, C ...Constrain
 
 	spsa := &SPSA{
 		Theta: theta0,
-		L: L,
-		Ak: StandardAk(a, float64(n / 10), .602),
-		Ck: StandardCk(c, .101),
+		L:     L,
+		Ak:    StandardAk(a, float64(n/10), .602),
+		Ck:    StandardCk(c, .101),
 		Delta: Bernoulli{1},
-		C: constraint,
+		C:     constraint,
 	}
 
 	return spsa.Run(n)
@@ -93,7 +93,7 @@ func (spsa *SPSA) Run(rounds int) Vector {
 // Run one round of SPSA.
 func (spsa *SPSA) round() {
 	// Estimate gradient and scale it by ak
-	Gk := spsa.estimateGradient().Scale(<- spsa.Ak)
+	Gk := spsa.estimateGradient().Scale(<-spsa.Ak)
 
 	// Adjust theta via SA
 	spsa.Theta = spsa.Theta.Subtract(Gk)
@@ -107,7 +107,7 @@ func (spsa *SPSA) estimateGradient() Vector {
 	n := len(spsa.Theta)
 
 	// Get delta vector
-	delta := SampleN(n, spsa.Delta).Scale(<- spsa.Ck)
+	delta := SampleN(n, spsa.Delta).Scale(<-spsa.Ck)
 
 	// Evaluate theta + ck * delta
 	tpos := spsa.Theta.Add(delta)
@@ -177,7 +177,6 @@ func StandardCk(c, gamma float64) GainSequence {
 	return StandardAk(c, 0, gamma)
 }
 
-
 //********** Perturbation Distribution *************
 
 func SampleN(n int, d PerturbationDistribution) Vector {
@@ -209,5 +208,5 @@ type SegmentedUniform struct {
 
 func (su SegmentedUniform) Sample() float64 {
 	r := rand.Float64() - .5
-	return math.Copysign(r, math.Abs(r) * 2 * (su.b - su.a) + su.a)
+	return math.Copysign(r, math.Abs(r)*2*(su.b-su.a)+su.a)
 }

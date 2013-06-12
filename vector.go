@@ -1,8 +1,8 @@
 package spsa
 
 import (
-	"math"
 	"fmt"
+	"math"
 )
 
 // A simple real vector type for better readability. All operations are out-of-place.
@@ -61,7 +61,7 @@ func (a Vector) Mean() (m float64) {
 func (a Vector) Var() (x float64) {
 	m := a.Mean()
 	for _, v := range a {
-		x += math.Pow(v - m, 2)
+		x += math.Pow(v-m, 2)
 	}
 	x /= float64(len(a) - 1)
 	return x
@@ -79,7 +79,7 @@ func (a Vector) MeanSquare() (x float64) {
 func (a Vector) String() (s string) {
 	for i, v := range a {
 		s += fmt.Sprintf("%.2f", v)
-		if i != len(a) - 1 {
+		if i != len(a)-1 {
 			s += ","
 		}
 	}

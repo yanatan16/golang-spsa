@@ -14,7 +14,7 @@ func AbsoluteSum(v Vector) (a float64) {
 
 func Rosenbrock(v Vector) (a float64) {
 	for i := 0; i < len(v); i += 2 {
-		a += 100 * math.Pow(math.Pow(v[i], 2) - v[i+1], 2) + math.Pow(v[i] - 1, 2)
+		a += 100*math.Pow(math.Pow(v[i], 2)-v[i+1], 2) + math.Pow(v[i]-1, 2)
 	}
 	return a
 }

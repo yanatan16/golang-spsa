@@ -1,10 +1,10 @@
 package spsa
 
 import (
-	"testing"
-	"math/rand"
 	"math"
+	"math/rand"
 	"reflect"
+	"testing"
 )
 
 //********** SPSA Implementation Example ***********
@@ -12,7 +12,7 @@ import (
 // This example uses the helper function Optimize which shortens the boilerplate
 // with default options.
 func ExampleSPSAOptimizeUse() {
-	theta := Optimize(AbsoluteSum/*Loss function*/, Vector{1,1,1,1,1}/*Theta0*/, 100/*n*/, 1/*a*/, .1/*c*/)
+	theta := Optimize(AbsoluteSum /*Loss function*/, Vector{1, 1, 1, 1, 1} /*Theta0*/, 100 /*n*/, 1 /*a*/, .1 /*c*/)
 
 	// theta is the optimized parameter vector
 	_ = theta
@@ -21,11 +21,11 @@ func ExampleSPSAOptimizeUse() {
 // This example uses the core optimization api with access to all the tunable knobs.
 func ExampleSPSAImplementation() {
 	spsa := &SPSA{
-		L: AbsoluteSum, // Loss Function
-		C: NoConstraints,
-		Theta: Vector{1,1,1,1,1},
-		Ak: StandardAk(1, 100, .602),
-		Ck: StandardCk(.1, .101),
+		L:     AbsoluteSum, // Loss Function
+		C:     NoConstraints,
+		Theta: Vector{1, 1, 1, 1, 1},
+		Ak:    StandardAk(1, 100, .602),
+		Ck:    StandardCk(.1, .101),
 		Delta: Bernoulli{1},
 	}
 
@@ -39,11 +39,11 @@ func ExampleSPSAImplementation() {
 
 func TestSPSAAbsoluteSum(t *testing.T) {
 	spsa := &SPSA{
-		L: AbsoluteSum, // Loss Function
-		C: NoConstraints,
-		Theta: Vector{1,1,1,1,1},
-		Ak: StandardAk(1, 100, .602),
-		Ck: StandardCk(.1, .101),
+		L:     AbsoluteSum, // Loss Function
+		C:     NoConstraints,
+		Theta: Vector{1, 1, 1, 1, 1},
+		Ak:    StandardAk(1, 100, .602),
+		Ck:    StandardCk(.1, .101),
 		Delta: Bernoulli{1},
 	}
 
@@ -55,14 +55,14 @@ func TestSPSAAbsoluteSum(t *testing.T) {
 }
 
 func TestOptimizeAbsoluteSum(t *testing.T) {
-	theta := Optimize(AbsoluteSum/*Loss function*/, Vector{1,1,1,1,1}/*Theta0*/, 1000/*n*/, 1/*a*/, .1/*c*/)
+	theta := Optimize(AbsoluteSum /*Loss function*/, Vector{1, 1, 1, 1, 1} /*Theta0*/, 1000 /*n*/, 1 /*a*/, .1 /*c*/)
 	if theta.MeanSquare() > .001 {
 		t.Error("SPSA/Optimize didn't optimize the AbsoluteSum function very well...", theta.String())
 	}
 }
 
 func TestSPSARosenbrock(t *testing.T) {
-	theta := Optimize(Rosenbrock, Vector{.99,1,.99,1,.99,1,.99,1,.99,1}, 10000, .002, .05)
+	theta := Optimize(Rosenbrock, Vector{.99, 1, .99, 1, .99, 1, .99, 1, .99, 1}, 10000, .002, .05)
 	if Rosenbrock(theta) > .001 {
 		t.Error("SPSA didn't optimize the Rosenbrock function very well...", theta.String(), Rosenbrock(theta))
 	}
@@ -71,7 +71,7 @@ func TestSPSARosenbrock(t *testing.T) {
 //********** Constraint function Testing ************
 
 func TestNoConstraints(t *testing.T) {
-	a := Vector{1,2,3,4,5}
+	a := Vector{1, 2, 3, 4, 5}
 	b := NoConstraints(a)
 	if !reflect.DeepEqual(a, b) {
 		t.Error("No Constraints didn't map as identity.")
@@ -79,11 +79,11 @@ func TestNoConstraints(t *testing.T) {
 }
 
 func TestBoundedConstraints(t *testing.T) {
-	bc := BoundedConstraints{{0,10},{5, 10}, {-5, 0}, {0, 5}, {0, 5}}
-	a := Vector{1,2,3,4,5}
+	bc := BoundedConstraints{{0, 10}, {5, 10}, {-5, 0}, {0, 5}, {0, 5}}
+	a := Vector{1, 2, 3, 4, 5}
 	b := bc.Constrain(a)
 
-	if !reflect.DeepEqual(b, Vector{1,5,0,4,5}) {
+	if !reflect.DeepEqual(b, Vector{1, 5, 0, 4, 5}) {
 		t.Error("Bounded Constraints didn't operate correctly")
 	}
 }
@@ -126,17 +126,17 @@ func testPerturbationDistribution(t *testing.T, p PerturbationDistribution) {
 //********** Gain Sequence Testing ***************
 
 func TestStandardAk(t *testing.T) {
-	testGainSequence(t, StandardAk(rand.Float64() * 100, rand.Float64() * 100, rand.Float64()))
+	testGainSequence(t, StandardAk(rand.Float64()*100, rand.Float64()*100, rand.Float64()))
 }
 
 func TestStandardCk(t *testing.T) {
-	testGainSequence(t, StandardCk(rand.Float64() * 100, rand.Float64()))
+	testGainSequence(t, StandardCk(rand.Float64()*100, rand.Float64()))
 }
 
 func testGainSequence(t *testing.T, g GainSequence) {
-	last := <- g
+	last := <-g
 	for i := 0; i < 100; i++ {
-		cur := <- g
+		cur := <-g
 		if cur >= last {
 			t.Error("GainSequence is not monotonically decreasing.")
 		} else if cur <= 0 {
