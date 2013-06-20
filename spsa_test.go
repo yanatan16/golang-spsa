@@ -22,11 +22,11 @@ func ExampleSPSAOptimizeUse() {
 func ExampleSPSAImplementation() {
 	spsa := &SPSA{
 		L:     AbsoluteSum, // Loss Function
-		C:     NoConstraints,
-		Theta: Vector{1, 1, 1, 1, 1},
-		Ak:    StandardAk(1, 100, .602),
-		Ck:    StandardCk(.1, .101),
-		Delta: Bernoulli{1},
+		C:     NoConstraints, // Constraint Function
+		Theta: Vector{1, 1, 1, 1, 1}, // Initial theta vector
+		Ak:    StandardAk(1, 100, .602), // a tuned, A ~= n / 10, alpha = .602
+		Ck:    StandardCk(.1, .101), // c ~= std-dev(Loss function), gamma = .101
+		Delta: Bernoulli{1}, // Perturbation Distribution
 	}
 
 	theta := spsa.Run(1000)
