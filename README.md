@@ -12,7 +12,7 @@ SPSA minimizes a loss function, so maximization problems must negate the fitness
 
 Since SPSA uses a small amount of randomness in its gradient estimate, it also produces some noise. This noise is the good kind however, because it promotes SPSA to become a global optimizer with the same convergence rate as FDSA!
 
-SPSA has fewer tuning knobs than many other global optimization methods, but it still requires some work. The most important parameter is `a` in the `a_k = a / (k + 1 + A) ^ &alpha;` gain sequence. It can wildly affect results. If you wish to limit function measurements, since SPSA uses two function measurements per iteration, pass in N / 2 as the number of rounds to run when using SPSA.
+SPSA has fewer tuning knobs than many other global optimization methods, but it still requires some work. The most important parameter is `a` in the `a(k) = a / (k + 1 + A) ^ alpha` gain sequence (see tuning below). It can wildly affect results. If you wish to limit function measurements, since SPSA uses two function measurements per iteration, pass in N / 2 as the number of rounds to run when using SPSA.
 
 For more information on SPSA, please see Spall's papers from his [website](http://jhuapl.edu/SPSA).
 
