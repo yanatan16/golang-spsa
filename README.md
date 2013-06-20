@@ -19,7 +19,7 @@ For more information on SPSA, please see Spall's papers from his [website](http:
 ### Tuning
 
 To tune SPSA, I suggest the Semiautomatic Tuning method by Spall introduced in his book [Introduction to Stochastic Search and Optimization (ISSO)](http://jhuapl.edu/ISSO/).
-There are 3 main knobs, the two gain sequences (_a_ and _c_), and the perturbation distribution, delta.
+There are 3 main knobs, the two gain sequences ( _a_ and _c_), and the perturbation distribution, delta.
 Delta is best chosen as Bernoulli +/- 1, as that is asymptotically optimal (it must not be Normal or Uniform, see ISSO).
 There are rules about the properties of the gain sequences. The standard form works well, and follows the forms:
 
@@ -30,7 +30,7 @@ c(k) = c / (k + 1) ^ gamma
 
 Here, the values alpha and gamma are tied together, asymptotically optimial is _alpha_ = 1 and _gamma_ = 1/6, but the values _alpha_ = .602 and gamma = .101 work well for finite cases.
 _A_ should be about 10% of the total iterations, and _c_ should be approximately the standard deviation of the loss function in question.
-_a_ is the most volatile parameter, and must be tuned carefully. In general, one should pick a such that the first step is not too large so as to send the algorithm in the wrong direction.
+_a_ is the most volatile parameter, and must be tuned carefully. In general, one should pick _a_ such that the first step is not too large so as to send the algorithm in the wrong direction.
 
 ## References
 
